@@ -21,6 +21,7 @@
             }));
     in
     {
+      overlays.default = final: prev: self.packages.${prev.system};
       packages = forAllSystems (pkgs:
         let
           node-packages = pkgs.callPackage ./pkgs/node-packages { };
