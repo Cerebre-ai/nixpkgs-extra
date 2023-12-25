@@ -36,7 +36,9 @@
           {
             name = "pkgs-extra";
 
-            packages = [ ];
+            packages = [
+              pkgs.node2nix
+            ];
           };
       });
       formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
