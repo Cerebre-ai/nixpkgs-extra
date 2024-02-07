@@ -28,7 +28,6 @@
         in
         {
           azurite = node-packages."azurite-3.29.0";
-          csharp-ls = pkgs.callPackage ./pkgs/csharp-ls.nix { };
           vacuum = pkgs.callPackage ./pkgs/vacuum.nix { };
         });
       devShells = forAllSystems (pkgs: {
