@@ -24,10 +24,12 @@
       overlays.default = final: prev: self.packages.${prev.system};
       packages = forAllSystems (pkgs:
         let
+          dotnet = pkgs.callPackage ./pkgs/dotnet { };
           node-packages = pkgs.callPackage ./pkgs/node-packages { };
         in
         {
           azurite = node-packages."azurite-3.29.0";
+          dotnet-sdk_8_0_202 = dotnet."sdk-8.0.202";
           vacuum = pkgs.callPackage ./pkgs/vacuum.nix { };
         });
       devShells = forAllSystems (pkgs: {
