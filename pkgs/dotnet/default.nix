@@ -7,4 +7,5 @@ let
 in
 {
   "sdk-8.0.202" = makeDotnet8 "8.0.202" (import ./8.0.202.nix).${system};
+  "sdk-8.0.204" = makeDotnet8 "8.0.204" (import ./8.0.204.nix).${system};
 }
