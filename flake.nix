@@ -36,7 +36,7 @@
           node-packages = pkgs.callPackage ./pkgs/node-packages { };
         in
         {
-          azurite = node-packages."azurite-3.29.0";
+          azurite = node-packages."azurite-3.30.0";
           dotnet-sdk_8_0_202 = dotnet."sdk-8.0.202";
           dotnet-sdk_8_0_204 = dotnet."sdk-8.0.204";
           dotnet-sdk_8_0_205 = dotnet."sdk-8.0.205";
