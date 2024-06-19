@@ -5,6 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
+  nixConfig = {
+    extra-substituters = [ "https://cerebre.cachix.org" ];
+    extra-trusted-public-keys = [ "cerebre.cachix.org-1:BaUHZ8t0vpa0AXTStUWbaGHBv92Phc2lBC3CJlC5erM=" ];
+  };
+
   outputs =
     { self, nixpkgs, ... }:
     let
