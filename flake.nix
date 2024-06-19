@@ -47,6 +47,7 @@
           dotnet-sdk_8_0_205 = dotnet."sdk-8.0.205";
           dotnet-sdk_8_0_300 = dotnet."sdk-8.0.300";
           dotnet-sdk_8_0_301 = dotnet."sdk-8.0.301";
+          dotnet-sdk_8_0_302 = dotnet."sdk-8.0.302";
         }
       );
       devShells = forAllSystems (pkgs: {
