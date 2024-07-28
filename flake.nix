@@ -39,8 +39,11 @@
         let
           dotnet = pkgs.callPackage ./pkgs/dotnet { };
           node-packages = pkgs.callPackage ./pkgs/node-packages { };
+          roslyn-ls = pkgs.callPackage ./pkgs/roslyn-ls { };
         in
         {
+          inherit roslyn-ls;
+
           azurite = node-packages."azurite-3.31.0";
           dotnet-sdk_8_0_202 = dotnet."sdk-8.0.202";
           dotnet-sdk_8_0_204 = dotnet."sdk-8.0.204";
