@@ -11,7 +11,7 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }:
+    { nixpkgs, ... }:
     let
       forAllSystems =
         function:
@@ -31,10 +31,7 @@
               }
             )
           );
-    in
-    {
-      overlays.default = final: prev: self.packages.${prev.system};
-      packages = forAllSystems (
+      packages =
         pkgs:
         let
           dotnet = pkgs.callPackage ./pkgs/dotnet { };
@@ -52,8 +49,11 @@
           dotnet-sdk_8_0_301 = dotnet."sdk-8.0.301";
           dotnet-sdk_8_0_302 = dotnet."sdk-8.0.302";
           dotnet-sdk_8_0_303 = dotnet."sdk-8.0.303";
-        }
-      );
+        };
+    in
+    {
+      overlays.default = final: prev: packages prev;
+      packages = forAllSystems packages;
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           name = "pkgs-extra";
