@@ -20,4 +20,5 @@ in
   "sdk-8.0.302" = makeDotnet8 "8.0.302" (import ./8.0.302.nix).${system};
   "sdk-8.0.303" = makeDotnet8 "8.0.303" (import ./8.0.303.nix).${system};
   "sdk-8.0.400" = makeDotnet8 "8.0.400" (import ./8.0.400.nix).${system};
+  "sdk-8.0.401" = makeDotnet8 "8.0.401" (import ./8.0.401.nix).${system};
 }
