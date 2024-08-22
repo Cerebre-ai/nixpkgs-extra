@@ -42,14 +42,8 @@
           inherit roslyn-ls;
 
           azurite = node-packages."azurite-3.32.0";
-          dotnet-sdk_8_0_202 = dotnet."sdk-8.0.202";
-          dotnet-sdk_8_0_204 = dotnet."sdk-8.0.204";
           dotnet-sdk_8_0_205 = dotnet."sdk-8.0.205";
-          dotnet-sdk_8_0_300 = dotnet."sdk-8.0.300";
-          dotnet-sdk_8_0_301 = dotnet."sdk-8.0.301";
-          dotnet-sdk_8_0_302 = dotnet."sdk-8.0.302";
           dotnet-sdk_8_0_303 = dotnet."sdk-8.0.303";
-          dotnet-sdk_8_0_400 = dotnet."sdk-8.0.400";
           dotnet-sdk_8_0_401 = dotnet."sdk-8.0.401";
         };
     in
