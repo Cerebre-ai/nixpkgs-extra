@@ -23,7 +23,7 @@ buildDotnetModule rec {
 
   # see all versions below:
   # https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.linux-x64/versions
-  version = "4.12.0-1.24378.2";
+  version = "4.12.0-3.24452.3";
   projectFile = "./ServerDownload.csproj";
   nugetDeps = ./deps.nix;
 
