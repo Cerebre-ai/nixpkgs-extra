@@ -4,9 +4,9 @@ on:
       - main
   pull_request:
 
-name: x86_64-linux
+name: linux
 jobs:
-  flake:
+  x86_64:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
