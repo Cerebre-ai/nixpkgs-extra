@@ -2,7 +2,7 @@
 
 set -e
 
-version=8.0.401
+version=8.0.402
 
 nix-prefetch-url https://dotnetcli.azureedge.net/dotnet/Sdk/${version}/dotnet-sdk-${version}-linux-x64.tar.gz
 nix-prefetch-url https://dotnetcli.azureedge.net/dotnet/Sdk/${version}/dotnet-sdk-${version}-linux-arm64.tar.gz

@@ -42,6 +42,7 @@
           dotnet-sdk_8_0_205 = dotnet."sdk-8.0.205";
           dotnet-sdk_8_0_303 = dotnet."sdk-8.0.303";
           dotnet-sdk_8_0_401 = dotnet."sdk-8.0.401";
+          dotnet-sdk_8_0_402 = dotnet."sdk-8.0.402";
         };
     in
     {
