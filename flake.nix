@@ -34,16 +34,13 @@
       packages =
         pkgs:
         let
-          dotnet = pkgs.callPackage ./pkgs/dotnet { };
+          dotnet = pkgs.callPackages ./pkgs/dotnet { };
           node-packages = pkgs.callPackage ./pkgs/node-packages { };
         in
         {
           azurite = node-packages."azurite-3.32.0";
-          dotnet-sdk_8_0_205 = dotnet."sdk-8.0.205";
-          dotnet-sdk_8_0_303 = dotnet."sdk-8.0.303";
-          dotnet-sdk_8_0_401 = dotnet."sdk-8.0.401";
-          dotnet-sdk_8_0_402 = dotnet."sdk-8.0.402";
-        };
+        }
+        // dotnet;
     in
     {
       overlays.default = final: prev: packages prev;

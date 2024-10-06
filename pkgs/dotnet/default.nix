@@ -4,16 +4,25 @@
   dotnet-sdk_8,
 }:
 let
-  makeDotnet8 =
+  files = builtins.attrNames (builtins.readDir ./versions);
+
+  makeDotnetSdk8 =
     version: url:
     dotnet-sdk_8.overrideAttrs (oldAttrs: {
       inherit version;
       src = fetchurl url;
     });
 in
-{
-  "sdk-8.0.205" = makeDotnet8 "8.0.205" (import ./8.0.205.nix).${system};
-  "sdk-8.0.303" = makeDotnet8 "8.0.303" (import ./8.0.303.nix).${system};
-  "sdk-8.0.401" = makeDotnet8 "8.0.401" (import ./8.0.401.nix).${system};
-  "sdk-8.0.402" = makeDotnet8 "8.0.402" (import ./8.0.402.nix).${system};
-}
+(builtins.listToAttrs (
+  builtins.map (
+    f:
+    let
+      version = builtins.replaceStrings [ ".nix" ] [ "" ] f;
+      name = "dotnet-sdk_${builtins.replaceStrings [ "." ] [ "_" ] version}";
+    in
+    {
+      inherit name;
+      value = makeDotnetSdk8 version (import ./versions/${f}).${system};
+    }
+  ) files
+))
