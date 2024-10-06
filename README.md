@@ -7,4 +7,3 @@ Hosts packages:
 
 -   azurite (only latest)
 -   various dotnet 8 SDK patch versions
--   roslyn-ls downloaded from https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl
