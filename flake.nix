@@ -11,7 +11,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs, ... }:
     let
       forAllSystems =
         function:
@@ -31,7 +31,12 @@
               }
             )
           );
-      packages =
+    in
+    {
+      overlays.default = final: prev: {
+        extra = self.packages.${prev.system};
+      };
+      packages = forAllSystems (
         pkgs:
         let
           dotnet = pkgs.callPackages ./pkgs/dotnet { };
@@ -40,11 +45,8 @@
         {
           azurite = node-packages."azurite-3.32.0";
         }
-        // dotnet;
-    in
-    {
-      overlays.default = final: prev: packages prev;
-      packages = forAllSystems packages;
+        // dotnet
+      );
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           name = "pkgs-extra";
