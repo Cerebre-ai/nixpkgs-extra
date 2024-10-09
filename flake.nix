@@ -39,13 +39,23 @@
       packages = forAllSystems (
         pkgs:
         let
-          dotnet = pkgs.callPackages ./pkgs/dotnet { };
-          node-packages = pkgs.callPackage ./pkgs/node-packages { };
+          azurite = pkgs.callPackages ./pkgs/node-packages { };
+          dotnet-sdk_8 = pkgs.callPackages ./pkgs/dotnet { };
+
+          getLatest =
+            attr:
+            let
+              # attr names sorts in ASC
+              lastAlphKey = pkgs.lib.last (builtins.attrNames attr);
+            in
+            attr.${lastAlphKey};
         in
-        {
-          azurite = node-packages."azurite-3.32.0";
+        dotnet-sdk_8
+        // azurite
+        // {
+          azurite = getLatest azurite;
+          dotnet-sdk_8 = getLatest dotnet-sdk_8;
         }
-        // dotnet
       );
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
