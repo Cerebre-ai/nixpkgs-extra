@@ -39,7 +39,9 @@
       packages = forAllSystems (
         pkgs:
         let
-          azurite = pkgs.callPackages ./pkgs/node-packages { };
+          azurite = pkgs.lib.concatMapAttrs (name: value: {
+            ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
+          }) (pkgs.callPackages ./pkgs/node-packages { });
           dotnet-sdk_8 = pkgs.callPackages ./pkgs/dotnet { };
 
           getLatest =
