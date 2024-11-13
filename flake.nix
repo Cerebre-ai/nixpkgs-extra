@@ -42,7 +42,7 @@
           azurite = pkgs.lib.concatMapAttrs (name: value: {
             ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
           }) (pkgs.callPackages ./pkgs/node-packages { });
-          dotnet-sdk_8 = pkgs.callPackages ./pkgs/dotnet { };
+          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
 
           getLatest =
             attr:
@@ -52,11 +52,11 @@
             in
             attr.${lastAlphKey};
         in
-        dotnet-sdk_8
+        dotnet-sdks
         // azurite
         // {
           azurite = getLatest azurite;
-          dotnet-sdk_8 = getLatest dotnet-sdk_8;
+          dotnet-sdk_8 = getLatest dotnet-sdks;
         }
       );
       devShells = forAllSystems (pkgs: {
