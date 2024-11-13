@@ -44,19 +44,23 @@
           }) (pkgs.callPackages ./pkgs/node-packages { });
           dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
 
-          getLatest =
-            attr:
+          getLatestFor =
+            v: attr:
             let
+              lib = pkgs.lib;
               # attr names sorts in ASC
-              lastAlphKey = pkgs.lib.last (builtins.attrNames attr);
+              lastAlphKey = lib.last (
+                builtins.filter (e: lib.hasPrefix v attr.${e}.version) (builtins.attrNames attr)
+              );
             in
             attr.${lastAlphKey};
         in
         dotnet-sdks
         // azurite
         // {
-          azurite = getLatest azurite;
-          dotnet-sdk_8 = getLatest dotnet-sdks;
+          azurite = getLatestFor "" azurite;
+          dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
+          dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
         }
       );
       devShells = forAllSystems (pkgs: {

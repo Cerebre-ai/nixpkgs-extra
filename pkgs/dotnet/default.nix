@@ -1,21 +1,14 @@
 {
   fetchurl,
   system,
-  dotnetCorePackages,
+  dotnet-sdk_8,
 }:
 let
   files = builtins.attrNames (builtins.readDir ./versions);
 
-  makeDotnetSdk8 =
+  makeDotnetSdk =
     version: url:
-    dotnetCorePackages.dotnet_8.sdk.overrideAttrs (oldAttrs: {
-      inherit version;
-      src = fetchurl url;
-    });
-
-  makeDotnetSdk9 =
-    version: url:
-    dotnetCorePackages.dotnet_9.sdk.overrideAttrs (oldAttrs: {
+    dotnet-sdk_8.overrideAttrs (oldAttrs: {
       inherit version;
       src = fetchurl url;
     });
@@ -34,8 +27,9 @@ in
           major = builtins.substring 0 1 version;
           maker =
             {
-              "8" = makeDotnetSdk8;
-              "9" = makeDotnetSdk9;
+              "8" = makeDotnetSdk;
+              # TODO use 9 here once it's added
+              "9" = makeDotnetSdk;
             }
             ."${major}";
         in
