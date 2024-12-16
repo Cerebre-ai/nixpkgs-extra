@@ -7,6 +7,7 @@ Hosts packages:
 
 -   azurite (only latest)
 -   various dotnet 8 SDK patch versions
+-   various dotnet 9 SDK patch versions
 
 ## How to add new dotnet version
 
