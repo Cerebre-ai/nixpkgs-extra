@@ -1,0 +1,90 @@
+name: Update Dotnet Versions
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: "0 8 * * *" # Runs daily at 8 AM UTC
+
+jobs:
+  update-dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure full history for branch checks
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check if branch exists
+        id: check_branch
+        run: |
+          if git show-ref --quiet refs/heads/update_dotnet; then
+            echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
+            echo "branch exists"
+            git checkout update_dotnet
+          else
+            echo "BRANCH_EXISTS=false" >> $GITHUB_ENV
+            echo "branch does not exist"
+            git checkout -b update_dotnet
+          fi
+
+      - name: Run update script
+        run: ./pkgs/dotnet/update-versions.sh
+
+      - name: Check for new commits
+        id: check_commits
+        run: |
+          if git ls-remote --exit-code --heads origin update_dotnet; then
+            # Branch exists on remote, check for new commits
+            if git rev-list origin/update_dotnet..HEAD | grep .; then
+              echo "remote exists and branch has new commits"
+              echo "NEW_COMMITS=true" >> $GITHUB_ENV
+            else
+              echo "remote exists but branch has not new commits"
+              echo "NEW_COMMITS=false" >> $GITHUB_ENV
+            fi
+          else
+            # Branch does not exist on remote, check against the main branch
+            if git rev-list origin/main..HEAD | grep .; then
+              echo "remote does not exist and branch has new commits compared to main"
+              echo "NEW_COMMITS=true" >> $GITHUB_ENV
+            else
+              echo "remote does not exist and branch has no new commits compared to main"
+              echo "NEW_COMMITS=false" >> $GITHUB_ENV
+            fi
+          fi
+
+      - name: Push changes
+        if: env.NEW_COMMITS == 'true'
+        run: |
+          git push origin update_dotnet
+
+      - name: Check for existing PR
+        id: check_pr
+        if: env.NEW_COMMITS == 'true'
+        run: |
+          PR_EXISTS=$(gh pr list --head update_dotnet --state open --json number --jq '.[].number' | wc -l)
+          if [[ "$PR_EXISTS" -gt 0 ]]; then
+            echo "pr exists"
+            echo "PR_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "pr does not exist"
+            echo "PR_EXISTS=false" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+
+      - name: Create Pull Request
+        if: env.NEW_COMMITS == 'true' && env.PR_EXISTS == 'false'
+        run: |
+          gh pr create --base main \
+            --head update_dotnet \
+            --title "Update dotnet versions" \
+            --body "Automated update of dotnet versions." \
+            --assignee konradmalik
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
