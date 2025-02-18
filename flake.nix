@@ -61,6 +61,8 @@
           azurite = getLatestFor "" azurite;
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
+          # to cache it
+          terraform = pkgs.terraform;
         }
       );
       devShells = forAllSystems (pkgs: {
