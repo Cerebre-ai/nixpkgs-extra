@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # FIXME cannot get my overrideAttrs for dotnet work in newer nixpkgs
+    nixpkgs-dotnet.url = "github:NixOS/nixpkgs/50b3bd3fed0442bcbf7f58355e990da84af1749d";
   };
 
   nixConfig = {
@@ -42,8 +44,9 @@
           azurite = pkgs.lib.concatMapAttrs (name: value: {
             ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
           }) (pkgs.callPackages ./pkgs/node-packages { });
-          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
-
+          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet {
+            inherit (self.inputs.nixpkgs-dotnet.legacyPackages.${pkgs.system}) dotnetCorePackages;
+          };
           getLatestFor =
             v: attr:
             let
