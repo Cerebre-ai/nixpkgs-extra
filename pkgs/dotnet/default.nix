@@ -27,8 +27,8 @@ in
           major = builtins.substring 0 1 version;
           maker =
             {
-              "8" = makeDotnetSdk dotnetCorePackages.sdk_8_0;
-              "9" = makeDotnetSdk dotnetCorePackages.sdk_9_0;
+              "8" = makeDotnetSdk dotnetCorePackages.sdk_8_0-bin.unwrapped;
+              "9" = makeDotnetSdk dotnetCorePackages.sdk_9_0-bin.unwrapped;
             }
             ."${major}";
         in
