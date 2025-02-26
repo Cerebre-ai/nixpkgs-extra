@@ -5,7 +5,7 @@ set -eu
 # run from the main repo dir
 
 dotnet_versions_url="https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json"
-latest_versions=$(curl -s "$dotnet_versions_url" | jq -r '."releases-index"[] | select(."support-phase" != "eol") | ."latest-sdk"')
+latest_versions=$(curl -s "$dotnet_versions_url" | jq -r '."releases-index"[] | select(."support-phase" == "active") | ."latest-sdk"')
 check_dir="./pkgs/dotnet/versions"
 
 # Iterate through latest versions and check if the file exists
