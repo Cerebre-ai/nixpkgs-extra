@@ -52,6 +52,7 @@ jobs:
           commit-message: "feat: dotnet update"
           branch: create-pull-request/dotnet
           delete-branch: true
+          assignees: konradmalik
           title: "Update dotnet versions"
           body: |
             Automated update of dotnet versions.
