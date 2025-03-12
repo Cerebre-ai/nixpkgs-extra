@@ -48,6 +48,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           commit-message: "feat: dotnet update"
           branch: create-pull-request/dotnet
           delete-branch: true
