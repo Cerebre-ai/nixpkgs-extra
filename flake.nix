@@ -34,9 +34,7 @@
     in
     {
       overlays.default = final: prev: {
-        extra = self.packages.${prev.system} // {
-          lib = self.lib.${prev.system};
-        };
+        extra = self.packages.${prev.system};
       };
       packages = forAllSystems (
         pkgs:
@@ -64,16 +62,8 @@
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
           # to cache it
           terraform = pkgs.terraform;
-
         }
       );
-      lib = forAllSystems (pkgs: {
-        # until https://github.com/NixOS/nixpkgs/pull/405282 or better solution
-        combineDotnetPackages =
-          (builtins.getFlake "github:konradmalik/nixpkgs/46306fd9b9ad013c9e6592544fc1e9b7f598cb62")
-          .legacyPackages.${pkgs.system}.dotnetCorePackages.combinePackages;
-      });
-
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           name = "pkgs-extra";
