@@ -1,5 +1,7 @@
 {
+  nixpkgs,
   fetchurl,
+  callPackage,
   system,
   dotnetCorePackages,
 }:
@@ -8,10 +10,20 @@ let
 
   makeDotnetSdk =
     orig: version: url:
-    orig.overrideAttrs (oldAttrs: {
-      inherit version;
-      src = fetchurl url;
-    });
+    let
+      # need wrapper only so that sdk will work with combinePackages if needed
+      mkWrapper = callPackage "${nixpkgs}/pkgs/development/compilers/dotnet/wrapper.nix" {
+        inherit (dotnetCorePackages)
+          nugetPackageHook
+          ;
+      };
+    in
+    mkWrapper "sdk" (
+      orig.overrideAttrs (oldAttrs: {
+        inherit version;
+        src = fetchurl url;
+      })
+    );
 in
 (builtins.listToAttrs (
   builtins.map (

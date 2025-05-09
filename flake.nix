@@ -42,7 +42,7 @@
           azurite = pkgs.lib.concatMapAttrs (name: value: {
             ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
           }) (pkgs.callPackages ./pkgs/node-packages { });
-          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
+          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { inherit nixpkgs; };
           getLatestFor =
             v: attr:
             let
