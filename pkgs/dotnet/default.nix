@@ -1,29 +1,8 @@
-{
-  nixpkgs,
-  fetchurl,
-  callPackage,
-  system,
-  dotnetCorePackages,
-}:
+{ dotnetCorePackages }:
 let
+  # NOTE: to generate those files run:
+  # nix run .#dotnet-update -- --sdk -o ./pkgs/dotnet/versions/9.0.203.nix 9.0.203
   files = builtins.attrNames (builtins.readDir ./versions);
-
-  makeDotnetSdk =
-    orig: version: url:
-    let
-      # need wrapper only so that sdk will work with combinePackages if needed
-      mkWrapper = callPackage "${nixpkgs}/pkgs/development/compilers/dotnet/wrapper.nix" {
-        inherit (dotnetCorePackages)
-          nugetPackageHook
-          ;
-      };
-    in
-    mkWrapper "sdk" (
-      orig.overrideAttrs (oldAttrs: {
-        inherit version;
-        src = fetchurl url;
-      })
-    );
 in
 (builtins.listToAttrs (
   builtins.map (
@@ -34,17 +13,7 @@ in
     in
     {
       inherit name;
-      value =
-        let
-          major = builtins.substring 0 1 version;
-          maker =
-            {
-              "8" = makeDotnetSdk dotnetCorePackages.sdk_8_0-bin.unwrapped;
-              "9" = makeDotnetSdk dotnetCorePackages.sdk_9_0-bin.unwrapped;
-            }
-            ."${major}";
-        in
-        maker version (import ./versions/${f}).${system};
+      value = (dotnetCorePackages.buildDotnetSdk ./versions/${f}).sdk;
     }
   ) files
 ))
