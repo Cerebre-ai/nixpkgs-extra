@@ -10,11 +10,11 @@ check_dir="./pkgs/dotnet/versions"
 
 # Iterate through latest versions and check if the file exists
 for version in $latest_versions; do
-    filename="$check_dir/$version.nix"
+    filename="${check_dir}/${version}.nix"
     if [[ -f "$filename" ]]; then
         echo "File $filename does exist. Skipping $version."
     else
         echo "File $filename does not exist. Adding $version."
-        ./pkgs/dotnet/nix-prefetch-dotnet.sh "$version"
+        nix run .#dotnet-update -- --sdk -o "${check_dir}/${version}.nix" "$version"
     fi
 done

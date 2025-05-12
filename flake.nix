@@ -42,7 +42,7 @@
           azurite = pkgs.lib.concatMapAttrs (name: value: {
             ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
           }) (pkgs.callPackages ./pkgs/node-packages { });
-          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { inherit nixpkgs; };
+          dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
           getLatestFor =
             v: attr:
             let
@@ -58,17 +58,31 @@
         // azurite
         // {
           azurite = getLatestFor "" azurite;
+
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
+          dotnet-update = pkgs.callPackage ./pkgs/dotnet/update.nix { };
+
           # to cache it
           terraform = pkgs.terraform;
         }
       );
+      apps = forAllSystems (pkgs: {
+        dotnet-update = {
+          type = "app";
+          program = "${self.packages.${pkgs.system}.dotnet-update}";
+        };
+      });
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           name = "pkgs-extra";
 
-          packages = [ pkgs.node2nix ];
+          packages = with pkgs; [
+            curl
+            jq
+            nix
+            node2nix
+          ];
         };
       });
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
