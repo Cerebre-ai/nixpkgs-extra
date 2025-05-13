@@ -16,7 +16,7 @@ Just call the below script with the proper version argument:
 
 ```bash
 # an example
-$ ./pkgs/dotnet/nix-prefetch-dotnet.sh 8.0.205
+$ nix run .#dotnet-update -- --sdk -o ./pkgs/dotnet/versions/9.0.203.nix 9.0.203
 ```
 
 And commit the result.
