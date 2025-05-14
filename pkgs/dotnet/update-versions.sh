@@ -6,7 +6,7 @@ set -eu
 
 dotnet_versions_url="https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json"
 latest_versions=$(curl -s "$dotnet_versions_url" | jq -r '."releases-index"[] | select(."support-phase" == "active") | ."latest-sdk"')
-check_dir="./pkgs/dotnet/versions"
+check_dir="pkgs/dotnet/versions"
 
 # Iterate through latest versions and check if the file exists
 for version in $latest_versions; do
@@ -15,6 +15,7 @@ for version in $latest_versions; do
         echo "File $filename does exist. Skipping $version."
     else
         echo "File $filename does not exist. Adding $version."
-        nix run .#dotnet-update -- --sdk -o "${check_dir}/${version}.nix" "$version"
+        # TODO pwd won't be needed after https://github.com/NixOS/nixpkgs/pull/405282
+        nix run .#dotnet-update -- --sdk -o "${PWD}/${check_dir}/${version}.nix" "$version"
     fi
 done
