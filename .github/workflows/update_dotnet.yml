@@ -43,7 +43,7 @@ jobs:
             accept-flake-config = true
 
       - name: Run update script
-        run: nix develop --command ./pkgs/dotnet/update-versions.sh
+        run: nix run .#dotnet-update
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7

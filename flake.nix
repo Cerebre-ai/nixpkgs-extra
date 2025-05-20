@@ -61,7 +61,7 @@
 
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
-          dotnet-update = pkgs.callPackage ./pkgs/dotnet/update.nix { };
+          dotnet-update = pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { };
 
           # to cache it
           terraform = pkgs.terraform;
@@ -70,7 +70,7 @@
       apps = forAllSystems (pkgs: {
         dotnet-update = {
           type = "app";
-          program = "${self.packages.${pkgs.system}.dotnet-update}";
+          program = "${pkgs.lib.getExe self.packages.${pkgs.system}.dotnet-update}";
         };
       });
       devShells = forAllSystems (pkgs: {
