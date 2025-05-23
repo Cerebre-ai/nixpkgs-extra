@@ -61,7 +61,7 @@
 
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
-          dotnet-update = pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { };
+          dotnet-update = (pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { inherit nixpkgs; });
 
           # to cache it
           terraform = pkgs.terraform;

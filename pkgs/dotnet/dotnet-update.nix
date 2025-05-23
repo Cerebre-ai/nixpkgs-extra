@@ -1,4 +1,5 @@
 {
+  nixpkgs,
   lib,
   curl,
   jq,
@@ -21,7 +22,7 @@ writeShellScriptBin "dotnet-update"
             echo "File $filename does exist. Skipping $version."
         else
             echo "File $filename does not exist. Adding $version."
-            ${lib.getExe dotnetCorePackages.generate-dotnet-sdk} --sdk -o "''${PWD}/''${check_dir}/''${version}.nix" "$version"
+            NIX_PATH=nixpkgs=${nixpkgs} ${lib.getExe dotnetCorePackages.generate-dotnet-sdk} --sdk -o "''${PWD}/''${check_dir}/''${version}.nix" "$version"
         fi
     done
   ''
