@@ -59,6 +59,8 @@
         // {
           azurite = getLatestFor "" azurite;
 
+          cobertura-total-coverage = pkgs.callPackage ./pkgs/cobertura-total-coverage.nix { };
+
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
           dotnet-update = (pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { inherit nixpkgs; });
