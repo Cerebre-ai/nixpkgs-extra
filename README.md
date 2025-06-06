@@ -12,7 +12,19 @@ Hosts packages:
 
 ## How to add new dotnet version
 
-Just call the below script with the proper version argument:
+### Automatically
+
+An GH action is run automatically daily and detects new versions.
+As soon as they are released and found, a PR to this repo is created. One just needs to accept it.
+
+### Manually
+
+If for some reason you want to do this manually, you can either:
+
+- go to Actions -> Update Dotnet Versions -> click "Run workflow".
+- or to do it locally:
+
+Call the below script with the proper version argument:
 
 ```bash
 # an example
