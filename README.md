@@ -1,5 +1,5 @@
-[![Actions Status](https://github.com/konradmalik/nixpkgs-extra/actions/workflows/linux.yml/badge.svg)](https://github.com/konradmalik/nixpkgs-extra/actions)
-[![Actions Status](https://github.com/konradmalik/nixpkgs-extra/actions/workflows/darwin.yml/badge.svg)](https://github.com/konradmalik/nixpkgs-extra/actions)
+[![Actions Status](https://github.com/Cerebre-ai/nixpkgs-extra/actions/workflows/linux.yml/badge.svg)](https://github.com/Cerebre-ai/nixpkgs-extra/actions)
+[![Actions Status](https://github.com/Cerebre-ai/nixpkgs-extra/actions/workflows/darwin.yml/badge.svg)](https://github.com/Cerebre-ai/nixpkgs-extra/actions)
 
 # nixpkgs-extra
 
