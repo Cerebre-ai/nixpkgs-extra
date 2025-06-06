@@ -6,6 +6,7 @@
 Hosts packages:
 
 - azurite (only latest)
+- cobertura-total-coverage (a small custom program to calculate total coverage from cobertura reports and print it in percentages for Gitlab CI)
 - terraform (only latest) to lock the version, for personal use
 - various dotnet 8 SDK patch versions
 - various dotnet 9 SDK patch versions
