@@ -32,11 +32,8 @@ jobs:
             git checkout -b update_dotnet
           fi
 
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
       - uses: actions/checkout@v4
+      - uses: wimpysworld/nothing-but-nix@v6
       - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
