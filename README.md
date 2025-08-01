@@ -5,7 +5,7 @@
 
 Hosts packages:
 
-- azurite (only latest)
+- azurite (hosted from nixpkgs only for backwards compatibilty)
 - cobertura-total-coverage (a small custom program to calculate total coverage from cobertura reports and print it in percentages for Gitlab CI)
 - terraform (only latest) to lock the version, for personal use
 - various dotnet 8 SDK patch versions

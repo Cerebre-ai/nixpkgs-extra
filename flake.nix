@@ -39,9 +39,6 @@
       packages = forAllSystems (
         pkgs:
         let
-          azurite = pkgs.lib.concatMapAttrs (name: value: {
-            ${builtins.replaceStrings [ "." ] [ "_" ] name} = value;
-          }) (pkgs.callPackages ./pkgs/node-packages { });
           dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
           getLatestFor =
             v: attr:
@@ -55,9 +52,8 @@
             attr.${lastAlphKey};
         in
         dotnet-sdks
-        // azurite
         // {
-          azurite = getLatestFor "" azurite;
+          azurite = pkgs.azurite;
 
           cobertura-total-coverage = pkgs.callPackage ./pkgs/cobertura-total-coverage.nix { };
 
@@ -83,7 +79,6 @@
             curl
             jq
             nix
-            node2nix
           ];
         };
       });
