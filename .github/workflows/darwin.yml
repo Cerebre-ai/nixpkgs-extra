@@ -11,9 +11,9 @@ jobs:
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
+      - uses: DeterminateSystems/nix-installer-action@v19
         with:
-          extra_nix_config: |
+          extra-conf: |
             accept-flake-config = true
 
       - if: ${{ !github.event.pull_request.head.repo.fork }}
@@ -31,9 +31,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
+      - uses: DeterminateSystems/nix-installer-action@v19
         with:
-          extra_nix_config: |
+          extra-conf: |
             accept-flake-config = true
 
       - if: ${{ !github.event.pull_request.head.repo.fork }}
