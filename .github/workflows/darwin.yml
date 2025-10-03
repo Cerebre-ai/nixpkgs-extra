@@ -7,8 +7,7 @@ on:
 name: darwin
 jobs:
   x86_64:
-    # latest x86_64-darwin
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@v20
@@ -28,7 +27,7 @@ jobs:
       - name: Build packages
         run: nix flake show --json | jq  '.packages."x86_64-darwin"|keys[]'| xargs -I {} nix build .#{}
   aarch64:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@v20
