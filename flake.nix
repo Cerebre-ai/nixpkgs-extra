@@ -36,6 +36,7 @@
       overlays.default = final: prev: {
         extra = self.packages.${prev.system};
       };
+
       packages = forAllSystems (
         pkgs:
         let
@@ -64,12 +65,16 @@
           terraform = pkgs.terraform;
         }
       );
+
+      checks = self.packages;
+
       apps = forAllSystems (pkgs: {
         dotnet-update = {
           type = "app";
           program = "${pkgs.lib.getExe self.packages.${pkgs.system}.dotnet-update}";
         };
       });
+
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           name = "pkgs-extra";
@@ -81,6 +86,7 @@
           ];
         };
       });
+
       formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
     };
 }

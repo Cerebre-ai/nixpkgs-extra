@@ -23,9 +23,6 @@ jobs:
 
       - name: Flake check
         run: nix flake check
-
-      - name: Build packages
-        run: nix flake show --json | jq  '.packages."x86_64-darwin"|keys[]'| xargs -I {} nix build .#{}
   aarch64:
     runs-on: macos-15
     steps:
@@ -43,6 +40,3 @@ jobs:
 
       - name: Flake check
         run: nix flake check
-
-      - name: Build packages
-        run: nix flake show --json | jq  '.packages."aarch64-darwin"|keys[]'| xargs -I {} nix build .#{}
