@@ -33,7 +33,6 @@ jobs:
           fi
 
       - uses: actions/checkout@v6
-      - uses: wimpysworld/nothing-but-nix@v6
       - uses: DeterminateSystems/nix-installer-action@v21
 
       - name: Run update script
