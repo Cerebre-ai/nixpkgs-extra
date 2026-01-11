@@ -9,6 +9,7 @@ Hosts packages:
 - terraform (only latest) to lock the version, for personal use
 - various dotnet 8 SDK patch versions
 - various dotnet 9 SDK patch versions
+- various dotnet 10 SDK patch versions
 
 ## How to add new dotnet version
 
