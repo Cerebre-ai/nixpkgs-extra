@@ -33,7 +33,7 @@ jobs:
           fi
 
       - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@v21
+      - uses: DeterminateSystems/nix-installer-action@v22
 
       - name: Run update script
         run: nix run .#dotnet-update
