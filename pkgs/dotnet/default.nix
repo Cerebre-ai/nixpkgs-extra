@@ -5,7 +5,7 @@ let
   files = builtins.attrNames (builtins.readDir ./versions);
 in
 (builtins.listToAttrs (
-  builtins.map (
+  map (
     f:
     let
       version = builtins.replaceStrings [ ".nix" ] [ "" ] f;
