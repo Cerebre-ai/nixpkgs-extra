@@ -41,6 +41,7 @@
         pkgs:
         let
           dotnet-sdks = pkgs.callPackages ./pkgs/dotnet { };
+          scripts = import ./pkgs/scripts { inherit pkgs; };
           getLatestFor =
             v: attr:
             let
@@ -53,9 +54,8 @@
             attr.${lastAlphKey};
         in
         dotnet-sdks
+        // scripts
         // {
-          cobertura-total-coverage = pkgs.callPackage ./pkgs/cobertura-total-coverage.nix { };
-
           dotnet-sdk_8 = getLatestFor "8" dotnet-sdks;
           dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
           dotnet-sdk_10 = getLatestFor "10" dotnet-sdks;
