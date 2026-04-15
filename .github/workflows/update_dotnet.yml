@@ -3,7 +3,7 @@ name: Update Dotnet Versions
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:
-    - cron: "0 8 * * *" # Runs daily at 8 AM UTC
+    - cron: "0 5 * * *" # Runs daily at 5 AM UTC
 
 jobs:
   update-dotnet:
@@ -36,7 +36,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
 
       - name: Run update script
-        run: nix run .#dotnet-update
+        run: nix --accept-flake-config run .#dotnet-update
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
