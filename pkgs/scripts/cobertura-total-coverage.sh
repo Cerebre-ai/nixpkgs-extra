@@ -2,6 +2,5 @@
 set -euo pipefail
 
 INPUT_FILE="$1"
-COVERAGE_DEC=$(xmlstarlet sel -t -v "number(//coverage/@line-rate)" <"${INPUT_FILE}" 2>/dev/null)
-COVERAGE_PCT=$(echo "100 * $COVERAGE_DEC" | bc)
+COVERAGE_PCT=$(xmlstarlet sel -t -v "100 * number(//coverage/@line-rate)" <"${INPUT_FILE}")
 printf "gitlab-coverage %s%%\n" "$COVERAGE_PCT"

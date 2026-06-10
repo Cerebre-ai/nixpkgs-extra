@@ -23,10 +23,7 @@ in
   cobertura-total-coverage = wrapScript {
     name = "cobertura-total-coverage";
     file = ./cobertura-total-coverage.sh;
-    deps = with pkgs; [
-      xmlstarlet
-      bc
-    ];
+    deps = with pkgs; [ xmlstarlet ];
   };
   wait-for-it = wrapScript {
     name = "wait-for-it";
