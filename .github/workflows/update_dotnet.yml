@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-slim
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Ensure full history for branch checks
 
@@ -32,7 +32,7 @@ jobs:
             git checkout -b update_dotnet
           fi
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@v22
 
       - name: Run update script
