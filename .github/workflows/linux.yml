@@ -7,6 +7,7 @@ on:
 name: linux
 jobs:
   x86_64:
+    name: x86_64-linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
