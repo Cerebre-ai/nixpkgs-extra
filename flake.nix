@@ -34,7 +34,7 @@
     in
     {
       overlays.default = final: prev: {
-        extra = self.packages.${prev.system};
+        extra = self.packages.${prev.stdenv.hostPlatform.system};
       };
 
       packages = forAllSystems (
@@ -71,7 +71,10 @@
       apps = forAllSystems (pkgs: {
         dotnet-update = {
           type = "app";
-          program = "${pkgs.lib.getExe self.packages.${pkgs.system}.dotnet-update}";
+          program = "${pkgs.lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.dotnet-update}";
+          meta = {
+            description = "Add nix definitions for the latest active dotnet SDK releases";
+          };
         };
       });
 
