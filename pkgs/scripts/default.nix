@@ -25,6 +25,14 @@ in
     file = ./cobertura-total-coverage.sh;
     deps = with pkgs; [ xmlstarlet ];
   };
+  bw-env = wrapScript {
+    name = "bw-env";
+    file = ./bw-env.sh;
+    deps = with pkgs; [
+      bitwarden-cli
+      jq
+    ];
+  };
   wait-for-it = wrapScript {
     name = "wait-for-it";
     file = ./wait-for-it.sh;
