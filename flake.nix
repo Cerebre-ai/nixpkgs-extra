@@ -15,21 +15,11 @@
     let
       forAllSystems =
         function:
-        nixpkgs.lib.genAttrs
-          [
-            "x86_64-linux"
-            "aarch64-linux"
-            "aarch64-darwin"
-          ]
-          (
-            system:
-            function (
-              import nixpkgs {
-                inherit system;
-                config.allowUnfree = true;
-              }
-            )
-          );
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system: function nixpkgs.legacyPackages.${system});
     in
     {
       overlays.default = final: prev: {
@@ -61,7 +51,11 @@
           dotnet-update = (pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { inherit nixpkgs; });
 
           # to cache it
-          terraform = pkgs.terraform;
+          terraform =
+            (import nixpkgs {
+              inherit (pkgs.stdenv.hostPlatform) system;
+              config.allowUnfree = true;
+            }).terraform;
         }
       );
 
