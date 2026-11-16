@@ -36,8 +36,9 @@
             let
               lib = pkgs.lib;
               # attr names sorts in ASC
+              # match on attr names, not `.version`, so unrelated (e.g. EOL-warning) SDKs aren't forced
               lastAlphKey = lib.last (
-                builtins.filter (e: lib.hasPrefix v attr.${e}.version) (builtins.attrNames attr)
+                builtins.filter (lib.hasPrefix "dotnet-sdk_${v}_") (builtins.attrNames attr)
               );
             in
             attr.${lastAlphKey};
@@ -45,6 +46,8 @@
         dotnet-sdks
         // scripts
         // {
+          # out of support, warns on use
+          dotnet-sdk_9 = getLatestFor "9" dotnet-sdks;
           dotnet-sdk_10 = getLatestFor "10" dotnet-sdks;
           dotnet-sdk_11 = getLatestFor "11" dotnet-sdks;
           dotnet-update = (pkgs.callPackage ./pkgs/dotnet/dotnet-update.nix { inherit nixpkgs; });

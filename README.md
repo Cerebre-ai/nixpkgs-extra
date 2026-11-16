@@ -8,9 +8,9 @@ Hosts packages:
 - cobertura-total-coverage (a small custom program to calculate total coverage from cobertura reports and print it in percentages for Gitlab CI)
 - wait-for-it (a small script to wait for UDP/TCP service)
 - terraform (only latest) to lock the version, for personal use
-- various dotnet 8 SDK patch versions
-- various dotnet 9 SDK patch versions
+- dotnet 9 SDK, final release only (**out of support** since 2026-11-10, evaluating it prints a warning)
 - various dotnet 10 SDK patch versions
+- various dotnet 11 SDK patch versions
 
 ## How to add new dotnet version
 
