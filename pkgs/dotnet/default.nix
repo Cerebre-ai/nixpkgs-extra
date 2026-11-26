@@ -7,7 +7,7 @@ let
   # Major versions past Microsoft's end of support, mapped to their EOL date.
   # Kept only for projects that still need them; using one prints a warning.
   eol = {
-    "9" = "2026-11-10";
+    # "9" = "2026-11-10";
   };
 
   warnIfEol =
